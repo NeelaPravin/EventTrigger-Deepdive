@@ -1,0 +1,39 @@
+name: Event Trigger with Activity Types
+on:
+  pull_request:
+    types: [opened, edited, closed, reopened, synchronize]
+  workflow_dispatch:
+    inputs:
+      activityType:
+        description: 'Select an activity type'
+        required: true
+        default: 'opened'
+        type: choice
+        options:
+          - opened
+          - edited
+          - closed
+          - reopened
+          - synchronize
+jobs:
+  EventTrigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v3
+      - name: install node Js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: npm ci
+      - name: Run test
+        run: |
+          echo "Running Tests"
+          npm test
+      - name: Run Build
+        run: |
+          echo "Running Build"
+          npm run build
+      - name: deploy
+        run: echo "Deploying Application"
