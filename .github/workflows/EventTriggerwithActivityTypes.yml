@@ -2,6 +2,10 @@ name: Event Trigger with Activity Types
 on:
   pull_request:
     types: [opened, edited, closed, reopened, synchronize]
+    branches:
+      - main
+    paths-ignore:
+      - '.github/workflows/**'
   workflow_dispatch:
     inputs:
       activityType:
